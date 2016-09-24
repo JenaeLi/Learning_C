@@ -1,7 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<stdio.h>
 
-
 1. 打印100~200 之间的素数
 int main()
 {
