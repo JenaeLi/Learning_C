@@ -1,0 +1,21 @@
+#include<stdio.h>
+int main()
+{
+	int a = 9;
+	int b = 13;
+	int r = 1;
+	int P = a*b;
+	int LCM;
+	while(r != 0)
+	{
+		r = a%b;
+		a = b;
+		b = r;
+	}
+	if(r == 0)
+	{
+		LCM = P/a;
+	}
+	printf("LCM = %d\n",LCM);
+	return 0;
+}
