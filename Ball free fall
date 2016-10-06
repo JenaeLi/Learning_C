@@ -1,0 +1,15 @@
+#include<stdio.h>
+int main()
+{
+	double h = 100;
+	double s = 100;
+	int i = 0;
+	for(i = 1;i < 10;i++)
+	{
+		h = h/2;
+		s = s+2*h;
+	}
+	h = h/2;
+	printf("h = %f  s = %f\n",h,s);
+	return 0;
+}
