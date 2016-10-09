@@ -1,0 +1,14 @@
+include<stdio.h>
+int main()
+{
+	double sign = 1.0;
+	int i = 1;
+	double sum = 0;
+	for(i = 1;i <= 100;i++)
+	{
+		sum = sum+sign/i;
+		sign = -sign;
+	}
+	printf("sum = %f\n",sum);
+	return 0;
+}
