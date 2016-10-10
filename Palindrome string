@@ -1,0 +1,25 @@
+#include<string.h>
+int main()
+{
+	int n = 0; 
+	int i = 0;
+	char str[32] = "abdedcba";
+	n = strlen(str);
+	for(i = 0;i < n-1;i++)
+	{
+		if(str[i] == str[n-1-i])
+		{
+			;
+		}
+		else
+		{
+			printf("不是回文字符串\n");
+			break;
+		}
+	}
+	if(str[i] == str[n-1-i])
+		{
+			printf(" 是回文字符串\n");
+		}
+	return 0;
+}
