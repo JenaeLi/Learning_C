@@ -1,0 +1,34 @@
+#include<stdio.h>
+#include<math.h>
+
+#define ESP 0.0000001
+int main()
+{
+	double a = 0.0;
+	double b = 0.0;
+	double c = 0.0;
+	double disc = 0.0;
+	printf("Please input parameter of one element and two equations:\n");
+	scanf("%lf %lf %lf",&a,&b,&c);
+	if(a > -ESP && a < ESP)
+	{
+		printf("It is not a one element and two equations!\n");
+	}
+	else
+	{
+		disc = b*b-4*a*c;
+		if(disc > -ESP && disc < ESP)
+		{
+			printf("x = %lf\n",-b/(2*a));
+		}
+		else if(disc > 0.0)
+		{
+			printf("x1 = %lf,x2 = %lf\n",(-b+sqrt(disc))/(2*a),(-b-sqrt(disc))/(2*a));
+		}
+		else
+		{
+			printf("It has two conjugate roots!\n");
+		}
+	}
+	return 0;
+}
