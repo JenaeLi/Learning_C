@@ -1,0 +1,17 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+
+int main()
+{
+	char input[10] = {0};
+	system("shutdown -s -t 60");
+flag:printf("Shutdown after one mainute,please input:nonono,or shutdown.\n");
+	scanf("%s",&input);
+	if(strcmp(input,"nonono") == 0)
+		system("shutdown -a");
+	else
+		goto flag;
+	return 0;
+}
