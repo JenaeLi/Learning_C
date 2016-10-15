@@ -1,0 +1,16 @@
+#include<stdio.h>
+#include<math.h>
+int main()
+{
+	int num = 0;
+	printf("Narcissistic number from 0 to 999 is:\n");
+	for(num = 100;num <= 999;num++)
+	{
+		if(pow(num/100,3)+pow(num/10%10,3)+pow(num%10,3) == num)
+		{
+			printf("%d ",num);
+		}
+	}
+	printf("\n");
+	return 0;
+}
