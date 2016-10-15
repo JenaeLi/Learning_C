@@ -1,0 +1,28 @@
+#include<stdio.h>
+int main()
+{
+	int count = 0;
+	int c = 0;
+	while((c = getchar()) != EOF)
+	{
+		
+		if(c == '{')
+		{
+			count++;
+		}
+		else if(c == '}'&&count != 0)
+		{
+			count--;
+		}
+		else if(c == '}'&&count == 0)
+		{
+			printf("error!\n");
+			return 0;
+		}
+	}
+	if(count == 0)
+		printf("right!\n");
+	else
+		printf("error!\n");
+	return 0;
+}
