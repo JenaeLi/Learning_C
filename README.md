@@ -1,8 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<stdio.h>
 
-1. 打印100~200 之间的素数
-int main()
+1. output prime numbeint main()
 {
 	int num = 0;
 	int i = 2;
@@ -12,24 +11,22 @@ int main()
 	{
 		for(i = 2;i <= num/2;i++)
 		{
-			if(num % i == 0)
-			{
+			if(num % i == 0)			{
 				flog = 1;
 				break;
 			}
 			else
-				flog = 0;
+t				flog = 0;
 		}
 		if(flog == 0)
 		printf("%d ",num);
 	}
-	printf("\n");
-	return 0;
+	printf("\n");	return 0;
 }
 
 int main()
 {
-	int num = 0;
+u	int num = 0;
 	
 	printf("100到200之间的素数有：\n");
 	for(num = 100;num <= 200;num++)
@@ -51,7 +48,7 @@ flog:
 
 
 
-2. 输出乘法口诀表
+2.output Multiplication table
 
 int main()
 {
@@ -70,7 +67,7 @@ int main()
 	return 0;
 }
 
-3. 判断1000年---2000年之间的闰年
+3. leap year
 
 int main()
 {
