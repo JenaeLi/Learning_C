@@ -1,30 +1,46 @@
 #include<stdio.h>
+#include<malloc.h>
+#include<stdlib.h>
 int main()
 {
+	int level = 5;
 	int i = 0;
 	int j = 0;
-	int n = 0;
-	int k = 0;
-	int arr[100][100] = {0};
-	printf("Please input n:\n");
-	scanf("%d",&n);
-	
-	for(i = 0;i < n;i++)
+	char** YHtrg = (char**)malloc(sizeof(int*)*level);
+	for(i = 0;i < level;i++)
 	{
-		arr[i][0] = 1;
-		for(j = 0;j < i;j++)
+		YHtrg[i] = (char*)malloc(sizeof(int*)*level);
+	}
+	for(i = 0;i < level;i++)
+	{
+		YHtrg[i][0] = 1;
+		YHtrg[i][i] = 1;
+	}
+	for(i = 2;i < level;i++)
+	{
+		for(j = 1;j < i;j++)
 		{
-			if(j == 0)
-			{
-				printf(" %d ",arr[i][j]);
-			}
-			else
-			{
-				arr[i][j] = arr[i-1][j-1]+arr[i-1][j];
-				printf(" %d ",arr[i][j]);
-			}
+			YHtrg[i][j] = YHtrg[i-1][j-1]+YHtrg[i-1][j];
+		}
+	}
+
+	for(i = 0;i < level;i++)
+	{
+		for(j = 0;j < level-1-i;j++)
+		{
+			printf("%3c",' ');
+		}
+		for(j = 0;j <= i;j++)
+		{
+			printf("%5d  ",YHtrg[i][j]);
 		}
 		printf("\n");
 	}
+	for(i = 0;i < level;i++)
+	{
+		free(*(YHtrg+i));
+		YHtrg[i] = NULL;
+	}
+	free(YHtrg);
 	return 0;
 }
