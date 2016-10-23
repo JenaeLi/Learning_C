@@ -3,7 +3,7 @@
 #include<stdlib.h>
 int main()
 {
-	int level = 5;
+	int level = 10;
 	int i = 0;
 	int j = 0;
 	char** YHtrg = (char**)malloc(sizeof(int*)*level);
@@ -15,24 +15,21 @@ int main()
 	{
 		YHtrg[i][0] = 1;
 		YHtrg[i][i] = 1;
-	}
-	for(i = 2;i < level;i++)
-	{
 		for(j = 1;j < i;j++)
 		{
 			YHtrg[i][j] = YHtrg[i-1][j-1]+YHtrg[i-1][j];
 		}
 	}
-
 	for(i = 0;i < level;i++)
 	{
-		for(j = 0;j < level-1-i;j++)
+		
+		for(j = 0;j < level-i;j++)
 		{
 			printf("%3c",' ');
 		}
 		for(j = 0;j <= i;j++)
 		{
-			printf("%5d  ",YHtrg[i][j]);
+			printf("%5d ",YHtrg[i][j]);
 		}
 		printf("\n");
 	}
