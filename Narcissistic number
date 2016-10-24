@@ -3,12 +3,26 @@
 int main()
 {
 	int num = 0;
+	int ret = 0;
 	printf("Narcissistic number from 0 to 999 is:\n");
-	for(num = 100;num <= 999;num++)
+	for(num = 0;num <= 999;num++)
 	{
-		if(pow(num/100,3)+pow(num/10%10,3)+pow(num%10,3) == num)
+		if(num < 10)
 		{
-			printf("%d ",num);
+			ret = 1;
+		}
+		else if(num < 100)
+		{
+			ret = 2;
+		}
+		else
+		{
+			ret = 3;
+		}
+		if(pow(num/100,ret)+pow(num/10%10,ret)+pow(num%10,ret) == num)
+		{
+			if(num/100 != 0)
+				printf("%d ",num);
 		}
 	}
 	printf("\n");
