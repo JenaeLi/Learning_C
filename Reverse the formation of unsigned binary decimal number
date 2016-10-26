@@ -1,0 +1,28 @@
+#include<stdio.h>
+#include<math.h>
+unsigned int reverse_bit(unsigned int value)
+{
+	int i = 0;
+	int num = 0;
+	for(i = 0;i < 32;i++)
+	{
+		if(value%2)
+		{
+			num += (int)pow(2,32-1-i);
+		}
+		value >>= 1;
+		if(value == 0)
+		{
+			break;
+		}
+	}
+	return num;
+}
+int main()
+{
+	int num = 25;
+	printf("Before: num = %u\n",num);
+	num = reverse_bit(num);
+	printf("After: num = %u\n",num);
+	return 0;
+}
