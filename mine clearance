@@ -1,0 +1,193 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+#include<time.h>
+#include<stdlib.h>
+#include<string.h>
+
+#define ROWS 10
+#define COLS 10
+#define MINE 30
+
+void menu()
+{
+	printf("*********************************\n");
+	printf("*********** 1.play **************\n");
+	printf("*********** 0.exit **************\n");
+	printf("*********************************\n");
+}
+
+
+void Init(char mine[ROWS+2][COLS+2],char show[ROWS+2][COLS+2],int x,int y)
+{
+	x = ROWS+2;
+	y = COLS+2;
+	memset(mine,'+',x*y*sizeof(char));
+	memset(show,'*',x*y*sizeof(char));
+}
+
+
+void Desplay(char arr[ROWS+2][COLS+2],int x,int y)
+{
+	int i = 0;
+	int j = 0;
+	printf("    1 2 3 4 5 6 7 8 9 10 11 12\n");
+	for(i = 0;i < ROWS+2;i++)
+	{
+		printf("%3d ",i+1);
+		for(j = 0;j < COLS+2;j++)
+		{
+			printf("%c ",arr[i][j]);
+		}
+		printf("\n");
+	}
+}
+
+
+void Mine_deg(char arr[ROWS+2][COLS+2],int x,int y)
+{
+	int mine_deg = 0;
+	for(mine_deg = 0;mine_deg < MINE;mine_deg++)
+	{
+	A:	x = rand()%(ROWS)+1;
+		y = rand()%(COLS)+1;
+		if(arr[x][y] == '+')
+		{
+			arr[x][y] = '@';
+		}
+		else
+		{
+			goto A;
+		}
+	}
+}
+
+
+int Player(char mine[ROWS+2][COLS+2],char show[ROWS+2][COLS+2],int x,int y)
+{
+	int count = 0;
+	while(1)
+	{
+		if(x > 0 && x <= ROWS+2 && y > 0 && y <= COLS+2)
+		{
+			if(mine[x-1][y-1] == '@')
+			{
+				show[x-1][y-1] = '@';
+				return 1;
+			}
+			else
+			{
+				if(mine[x-2][y-2] == '@')
+					count++;
+				if(mine[x-2][y-1] == '@')
+					count++;
+				if(mine[x-2][y] == '@')
+					count++;
+				if(mine[x-1][y-2] == '@')
+					count++;
+				if(mine[x-1][y] == '@')
+					count++;
+				if(mine[x][y] == '@')
+					count++;
+				if(mine[x][y-1] == '@')
+					count++;
+				if(mine[x][y-2] == '@')
+					count++;
+				show[x-1][y-1] = count+'0';
+				return -1;
+			}
+		}
+		else
+		{
+			printf("Error input!\n");
+			return 0;
+		}
+	}
+}
+
+
+void Game()
+{
+	char mine[ROWS+2][COLS+2] = {'0'};
+	char show[ROWS+2][COLS+2] = {'0'};
+	int x = 0;
+	int y = 0;
+	int row = 0;
+	int col = 0;
+	int play_deg = (ROWS+2)*(COLS+2)-MINE;
+	int count = 0;
+	srand((unsigned int)time(NULL));
+	Init(mine,show,x,y);
+	Mine_deg(mine,x,y);
+	//Desplay(mine,x,y);
+	Desplay(show,x,y);
+	while(play_deg)
+	{
+input:	printf("Please input (x y):>>");
+		scanf("%d %d",&x,&y);
+		if(count == 0 )
+		{
+			if((Player(mine,show,x,y) == 1))
+		{
+		RAND:row = rand()%(ROWS)+1;
+			col = rand()%(COLS)+1;
+			if(mine[row][col] != '@')
+			{
+				mine[row][col] = mine[x-1][y-1];
+				mine[x-1][y-1] = '+';
+				Player(mine,show,x,y);
+				//Desplay(mine,x,y);
+			}
+			else
+			{
+				goto RAND;
+			}
+		}
+		}
+		else
+		{
+			if((Player(mine,show,x,y) == 1))
+		{
+			printf("What a pity!It is a mine.\n");	
+			Desplay(mine,x,y);
+			break;
+		}
+		else if(Player(mine,show,x,y) == 0)
+		{
+			goto input;
+			
+		}
+		else if(play_deg == 1)
+		{
+			printf("Congratulations，you are winner!\n");
+			Desplay(mine,x,y);
+			break;
+		}
+		}
+		
+		Desplay(show,x,y);
+		play_deg--;
+		count++;
+	}
+}
+int main()
+{
+	int input = 0;
+	do
+	{
+		menu();
+		printf("Please choose (0 or 1):\n");
+		scanf("%d",&input);
+		switch(input)
+		{
+		case 1:
+			Game();
+			break;
+		case 0:
+			break;
+		default:
+			printf("error input!\n");
+			break;
+		}
+	}while(input);
+	return 0;
+}
