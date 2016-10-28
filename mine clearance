@@ -15,7 +15,6 @@ void menu()
 	printf("*********************************\n");
 }
 
-
 void Init(char mine[ROWS+2][COLS+2],char show[ROWS+2][COLS+2],int x,int y)
 {
 	x = ROWS+2;
