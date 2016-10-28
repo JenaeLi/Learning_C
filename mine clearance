@@ -23,7 +23,6 @@ void Init(char mine[ROWS+2][COLS+2],char show[ROWS+2][COLS+2],int x,int y)
 	memset(show,'*',x*y*sizeof(char));
 }
 
-
 void Desplay(char arr[ROWS+2][COLS+2],int x,int y)
 {
 	int i = 0;
@@ -39,7 +38,6 @@ void Desplay(char arr[ROWS+2][COLS+2],int x,int y)
 		printf("\n");
 	}
 }
-
 
 void Mine_deg(char arr[ROWS+2][COLS+2],int x,int y)
 {
@@ -58,7 +56,6 @@ void Mine_deg(char arr[ROWS+2][COLS+2],int x,int y)
 		}
 	}
 }
-
 
 int Player(char mine[ROWS+2][COLS+2],char show[ROWS+2][COLS+2],int x,int y)
 {
@@ -101,7 +98,6 @@ int Player(char mine[ROWS+2][COLS+2],char show[ROWS+2][COLS+2],int x,int y)
 		}
 	}
 }
-
 
 void Game()
 {
