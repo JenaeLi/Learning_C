@@ -1,0 +1,35 @@
+#include<stdio.h>
+#include<ctype.h>
+#include<assert.h>
+void str_switch(char *start,char *end)
+{
+	assert(start);
+	assert(end);
+	while(start < end)
+	{
+		*start ^= *end;
+		*end ^= *start;
+		*start ^= *end;
+		start++;
+		end--;
+ 	}
+}
+int main()
+{
+	char str[] = "! student a am i";
+	char *p = str;
+	char *q = p;
+	while(*p != '\0')
+	{
+		if(isspace(*p))
+		{
+			str_switch(q,p-1);
+			q = p+1;
+		}
+		p++;
+	}
+	str_switch(q,p-1);
+	str_switch(str,p-1);
+	printf("%s\n",str);
+	return 0;
+}
