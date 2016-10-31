@@ -1,0 +1,47 @@
+#include<stdio.h>
+#include<ctype.h>
+#include<assert.h>
+void my_replace(char *str,int sz)
+{
+	char *start = str;
+	int space_num = 0;
+	int old_sz = 0;
+	int new_sz = 0;
+	char * end = 0;
+	assert(str);
+	assert(sz > 0);
+	while(*start != '\0')
+	{
+		if(isspace(*start))
+		{
+			space_num++;
+		}
+		old_sz++;
+		start++;
+	}
+	new_sz = old_sz+space_num*2+1;
+	end = str+new_sz-1;
+	while(start >= str)
+	{
+		if(isspace(*start))
+		{
+			*end-- = '0';
+			*end-- = '2';
+			*end = '%';
+		}
+		else
+		{
+			*end = *start;
+		}
+		start--;
+		end--;
+	}
+}
+int main()
+{
+	char arr[64] = "we are happy!!!";
+	int sz = sizeof(arr)/sizeof(arr[0]);
+	my_replace(arr,sz);
+	printf("%s\n",arr);
+	return 0;
+}
