@@ -1,0 +1,20 @@
+#include<stdio.h>
+#include<assert.h>
+#include<windows.h>
+int my_strlen(const char *str)
+{
+	int count = 0;
+	while(*str++)
+	{
+		count++;
+	}
+	return count;
+}
+int main()
+{
+	char str[] = "Day day up!";
+	int ret = my_strlen(str);
+	printf("ret = %d\n",ret);
+	system("pause");
+	return 0;
+}
