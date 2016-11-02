@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 int main()
 {
@@ -19,3 +20,32 @@ int main()
 	printf("LCM = %d\n",LCM);
 	return 0;
 }
+
+//int GCD(int x,int y)
+//{
+//	while (x*y)
+//	{
+//		if (x > y)
+//		{
+//			x %= y;
+//		}
+//		else 
+//		{
+//			y %= x;
+//		}
+//	}
+//	return x>y?x:y;
+//}
+//int LCM(int x,int y)
+//{
+//	int tmp = GCD(x,y);
+//	return x*y/tmp;
+//}
+//int main()
+//{
+//	int a = 20;
+//	int b = 36;
+//	printf("GCD = %d\n",GCD(a,b));
+//	printf("LCM = %d\n",LCM(a,b));
+//	return 0;
+//}
