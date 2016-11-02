@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 int main()
 {
@@ -21,3 +22,25 @@ int main()
 	printf("count = %d\n",count);
 	return 0;
 }
+int differ(int x,int y)
+//{
+//	int xor = x^y;
+//	int count = 0;
+//	while(xor)
+//	{
+//		//if(xor & 1)
+//		//	count++;
+//		//xor >>= 1;
+//		xor &= (xor-1);
+//		count++;
+//	}
+//	return count;
+//}
+//int main()
+//{
+//	int a = 1999;
+//	int b = 2299;
+//	int diff = differ(a,b);
+//	printf("%d\n",diff);
+//	return 0;
+//}
