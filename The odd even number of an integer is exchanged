@@ -1,0 +1,9 @@
+#include<stdio.h>
+#define CHANGE(x) ((x&(0x55555555))>>1)|((x&(0xaaaaaaaa))>>1)
+int main()
+{
+	int x = 42;
+	printf("%d\n", CHANGE(x));
+	system("pause");
+	return 0;
+}
