@@ -1,0 +1,50 @@
+#include<stdio.h>
+#include<assert.h>
+#include<windows.h>
+
+char* my_strstr(const char* str1, const char* str2)
+{
+	assert(str1);
+	assert(str2);
+	char* pstr1 = str1;
+	char* p = pstr1;
+	char* pstr2 = str2;
+	while (*pstr1 != '\0')
+	{
+		p = pstr1;
+		pstr2 = str2;
+		while ((*pstr2 != '\0') && (*pstr1 != '\0'))
+		{
+			if (*pstr2++ == *pstr1++)
+			{
+				;
+			}
+			else
+			{
+				break;
+			}
+		}
+		if (*pstr2 == '\0')
+		{
+			return p;
+		}
+	}
+	return NULL;
+}
+int main()
+{
+	char string[] = "East or west,I'm best!";
+	char str[] = "best";
+	char* p = my_strstr(string, str);
+	int res = p - string + 1;
+	if (p != NULL)
+	{
+		printf("%s found at position %d\n",str,res);
+	}
+	else
+	{
+		printf("%s is not found!\n", str);
+	}
+	system("pause");
+	return 0;
+}
