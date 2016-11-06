@@ -1,0 +1,33 @@
+#include<stdio.h>
+#include<assert.h>
+#include<windows.h>
+
+void reverse(char *str)
+{
+  assert(str);
+	char* start = str;
+	char* end;
+	while (*start != '\0')
+	{
+		start++;
+	}
+	end = start-1;
+	start = str;
+	
+	while (start < end)
+	{
+		*start ^= *end;
+		*end ^= *start;
+		*start ^= *end;
+		start++, end--;
+	}
+
+}
+int main()
+{
+	char str[] = "abcdefg";
+	reverse(str);
+	printf("After reverse :%s\n", str);
+	system("pause");
+	return 0;
+}
