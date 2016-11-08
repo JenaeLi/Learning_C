@@ -1,0 +1,30 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<assert.h>
+
+int Fibnum(int n)
+{
+	int i = 0;
+	int res = 0;
+	int w = 0;
+	int q = 1;
+	assert(n>2);
+	for(i = 3;i <= n;i++)
+	{
+		res = w+q;
+		w = q;
+		q = res;
+	}
+	return res;
+}
+int main()
+{
+	int FibNum[1000] = {0,1};
+	int n = 0;
+	int value = 0;
+	printf("Please input n :>");
+	scanf("%d",&n);
+	value = Fibnum(n);
+	printf("Fibonacci number of n is %d\n",value);
+	return 0;
+}
