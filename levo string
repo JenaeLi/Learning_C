@@ -1,0 +1,31 @@
+#include<stdio.h>
+#include<string.h>
+#include<assert.h>
+void levo(char arr[],int len)
+{	
+	char* p = arr;
+	int tmp = *p;
+	assert(arr);
+	assert(len>0);
+	while((arr+len-1) != p)
+	{
+		*p = *(p+1);
+		p++;
+	}
+	*p = tmp;
+}
+int main()
+{
+	char arr[] = "AABCD";
+	int len = strlen(arr);
+	int time = 0;
+	int i = 0;
+	printf("Please input time of levo:>");  
+	scanf("%d",&time);
+	for(i = 0;i < time ;i++)
+	{
+		levo(arr,len);
+	}
+	printf("%s\n",arr);
+	return 0;
+}
