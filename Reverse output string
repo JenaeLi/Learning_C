@@ -1,0 +1,21 @@
+#include<stdio.h>
+#include<string.h>
+
+void reverse(const char* arr)
+{
+	if((*arr)=='\0')
+	{
+		return;	
+	}
+	reverse(arr+1);
+	printf("%c",*arr);
+}
+int main()
+{
+	const char arr[] = "ABCDEF";
+	printf("before ： %s\n",arr);
+	printf("after ： ");
+	reverse(arr);
+	printf("\n");
+	return 0;
+}
