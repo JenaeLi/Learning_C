@@ -1,0 +1,22 @@
+#include<stdio.h>
+#include<windows.h>
+#pragma warning (disable :4996)
+int Fibnum(int n)
+{
+	if (n == 1 || n == 2)
+	{
+		return 1;
+	}
+	return Fibnum(n - 2) + Fibnum(n - 1);
+}
+int main()
+{
+	int n = 9;
+	int value = 0;
+	printf("Please input n :>");
+	scanf("%d", &n);
+	value = Fibnum(n);
+	printf("Fibonacci number of %d is %d\n",n, value);
+	system("pause");
+	return 0;
+}
