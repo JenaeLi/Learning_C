@@ -26,6 +26,16 @@ int my_strlen(char * str)
 	return end-str;
 }
 
+//three
+int my_strlen(char * str)
+{
+	if (*str == '\0')
+	{
+		return 0;
+	}
+	return 1+my_strlen(str+1);
+}
+
 int main()
 {
 	char str[] = "Day day up!";
