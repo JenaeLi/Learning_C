@@ -1,6 +1,9 @@
 #include<stdio.h>
 #include<assert.h>
 #include<windows.h>
+
+
+//one
 int my_strlen(const char *str)
 {
 	int count = 0;
@@ -10,6 +13,19 @@ int my_strlen(const char *str)
 	}
 	return count;
 }
+
+//two
+int my_strlen(char * str)
+{
+	assert(str);
+	char*end = str;
+	while (*end != '\0')
+	{
+		end++;
+	}
+	return end-str;
+}
+
 int main()
 {
 	char str[] = "Day day up!";
