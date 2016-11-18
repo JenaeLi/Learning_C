@@ -1,0 +1,35 @@
+#include<stdio.h>
+#include<windows.h>
+#include<string.h>
+#include<assert.h>
+#include<stdarg.h>
+
+int my_printf(const char* format, ...)
+{
+	assert(format);
+	va_list arg;
+	va_start(arg, format);
+	const char* start = format;
+	while (*start)
+	{
+		putchar(*start);
+		start++;
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		char* _str = va_arg(arg, char *);
+		while (*_str)
+		{
+			putchar(*_str);
+			_str++;
+		}
+	}
+	va_end(arg);
+	return 0;
+}
+int main()
+{
+	my_printf("s ccc ", "hello ", "b", "i", "t", "\n");
+	system("pause");
+	return 0;
+}
