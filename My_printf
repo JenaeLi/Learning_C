@@ -1,0 +1,80 @@
+#include<stdio.h>
+#include<windows.h>
+#include<string.h>
+#include<assert.h>
+#include<stdarg.h>
+
+void my_putint(int src)
+{
+	if (src < 0)
+	{
+		putchar('-');
+		src = src*(-1);
+	}
+	int num = src / 10;
+	if (num != 0)
+	{
+		my_putint(num);
+	}
+	putchar(src % 10 + '0');
+}
+int my_printf(const char * format, ...)
+{
+	assert(format);
+	va_list arg;
+	va_start(arg, format);
+	const char * start = format;
+	while (*start != '\0')
+	{
+		if (*start == '%')
+		{
+			start++;
+			switch (*start)
+			{
+			case 'd':
+			{
+						int _int = va_arg(arg, int);
+						my_putint(_int);
+			}
+				break;
+			case 'c':
+			{
+						char _char = va_arg(arg, char);
+						putchar(_char);
+			}
+				break;
+			case 's':
+			{
+						char * _str = va_arg(arg, char*);
+						while (*_str != '\0')
+						{
+							putchar(*_str++);
+						}
+			}
+				break;
+			default:
+			{
+					   putchar(*(start - 1));
+					   putchar(*start);
+			}
+				break;
+			}
+		}
+		else
+		{
+			putchar(*start);
+		}
+		start++;
+	}
+  va_end(arg);
+	return 0;
+}
+int main()
+{
+	int a = -20;
+	char c = 'c';
+	char* msg = "hello bit!";
+	my_printf("hello bit : %d \n hello bit : %c \n hello world : %s\n", a, c, msg);
+	system("pause");
+	return 0;
+}
