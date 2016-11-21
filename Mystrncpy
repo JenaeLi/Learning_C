@@ -1,0 +1,25 @@
+#include<stdio.h>
+#include<windows.h>
+#include<assert.h>
+
+char* my_strncpy(char *dst,const char *src,int count)
+{
+	assert(dst);
+	assert(src);
+	assert(count > 0);
+	char * start = dst;
+	while (count--)
+	{
+		*start++ = *src++;
+	}
+	return dst;
+}
+int main()
+{
+	char msg[64] = "good good study ";
+	printf("before	:%s\n", msg);
+	my_strncpy(msg+16, "day day up!", 11);
+	printf("after	:%s\n", msg);
+	system("pause");
+	return 0;
+}
