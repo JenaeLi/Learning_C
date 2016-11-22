@@ -1,0 +1,30 @@
+#include<stdio.h>
+#include<windows.h>
+#include<assert.h>
+
+char *my_strncat(char* dst,const char* src, int count)
+{
+	assert(dst);
+	assert(src);
+	assert(count > 0);
+	char*  start = dst;
+	while (*start != '\0')
+	{
+		start++;
+	}
+	while (count--)
+	{
+		*start++ = *src++;
+	}
+	*start = '\0';
+	return dst;
+	
+}
+int main()
+{
+	char str1[64] = "good good study ,";
+	char* str2 = "day day up!";
+	printf("%s\n", my_strncat(str1, str2,11));
+	system("pause");
+	return 0;
+}
