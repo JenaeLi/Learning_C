@@ -1,0 +1,24 @@
+#include<stdio.h>
+#include<windows.h>
+#include<assert.h>
+#pragma warning(disable : 4996)
+
+int add(int num)
+{
+	assert(num);
+	int value = num / 10;
+	if (value == 0)
+	{
+		return num%10;
+	}
+	return num%10 + add(value);
+}
+int main()
+{
+	int num = 0;
+	printf("Please input num :> ");
+	scanf("%d", &num);
+	printf("add : %d\n", add(num));
+	system("pause");
+	return 0;
+}
