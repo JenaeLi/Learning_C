@@ -1,0 +1,88 @@
+#include<stdio.h>
+#include<windows.h>
+#include<assert.h>
+#pragma warning(disable : 4996)
+
+double my_pow(int base, int index)
+{
+	
+	if (index == 0 || base == 1)
+		return 1;
+	
+	if (base == 0)
+		return 0;
+	
+	if (base > 0 && index > 0)
+	{
+		if (--index == 0)
+		{
+			return base;
+		}
+		return base*my_pow(base, index);
+	}
+	
+	else if (base < 0 && index > 0)
+	{
+		if ((index & 1) == 0)
+		{
+			base = base*(-1);
+			if (--index == 0)
+			{
+				return base;
+			}
+			return base*my_pow(base, index);
+		}
+		
+		else
+		{
+			base = base*(-1);
+			if (--index == 0)
+			{
+				return base;
+			}
+			return -base*my_pow(base, index);
+		}
+	}
+	else if (base > 0 && index < 0)
+	{
+		index = index*(-1);
+		if (--index == 0)
+		{
+			return base;
+		}
+		return 1/(base*my_pow(base, index));
+	}
+	
+	else
+	{
+		index = index*(-1);
+		if ((index & 1) == 0)
+		{
+			base = base*(-1);
+			if (--index == 0)
+			{
+				return base;
+			}
+			return 1/(base*my_pow(base, index));
+		}
+		else
+		{
+			base = base*(-1);
+			if (--index == 0)
+			{
+				return base;
+			}
+			return -1/(base*my_pow(base, index));
+		}
+	}
+}
+int main()
+{
+	int num = 0;
+	int index = 0;
+	printf("Please input num and index :> ");
+	scanf("%d %d", &num, &index);
+	printf("pow(%d,%d) : %f\n", num, index, my_pow(num, index));
+	system("pause");
+	return 0;
+}
