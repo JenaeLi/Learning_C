@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<windows.h>
 #include<assert.h>
-
 void show(int *arr, int len)
 {
 	assert(arr);
