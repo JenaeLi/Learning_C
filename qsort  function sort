@@ -1,0 +1,62 @@
+#include<stdio.h>
+#include<windows.h>
+
+int intcmp(const void* x, const void* y)
+{
+	return *(int*)x - *(int*)y;
+}
+int doublecmp(const void* x, const void* y)
+{
+	return (*(double*)x - *(double*)y);
+}
+int strcmp(const void* x, const void* y)
+{
+	return strcmp(*(char **)x, *(char **)y);
+}
+void show_int(int arr[], int len)
+{
+	int i = 0;
+	for (i = 0; i < len; i++)
+	{
+		printf("%d ", arr[i]);
+	}
+	printf("\n");
+}
+void show_double(double arr[], int len)
+{
+	int i = 0;
+	for (i = 0; i < len; i++)
+	{
+		printf("%f ", arr[i]);
+	}
+	printf("\n");
+}
+void show_str(char *arr[], int len)
+{
+	int i = 0;
+	for (i = 0; i < len; i++)
+	{
+		printf("%s ", arr[i]);
+	}
+	printf("\n");
+}
+int main()
+{
+	int arr1[] = { 34, 1, 45, 6586, 9, 5, 2, 35, 85, 25, 346 };
+	double arr2[] = { 1.32, 235.24, 435.42, 13.53, 56.346, 56.347, 6.76 };
+	char *arr3[] = {"gszhdb", "njefgbdj", "hbdggd", "dnjsfgbxf", "zhsed"};
+	int len1 = sizeof(arr1) / sizeof(arr1[0]);
+	int len2 = sizeof(arr2) / sizeof(arr2[0]);
+	int len3 = sizeof(arr3) / sizeof(arr3[0]);
+	qsort((void *)arr1, len1, sizeof(int), intcmp);
+	qsort((void *)arr2, len2, sizeof(double), doublecmp);
+	qsort(arr3, len3, sizeof(char*), strcmp);
+	printf("int sort : \n");
+	show_int(arr1, len1);
+	printf("double sort : \n");
+	show_double(arr2, len2);
+	printf("string sort : \n");
+	show_str(arr3, len3);
+	system("pause");
+	return 0;
+}
