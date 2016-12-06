@@ -1,22 +1,21 @@
 #include<stdio.h>
 #include<windows.h>
-#include<assert.h>
 #include<stdlib.h>
+#define ROW 1000
 #pragma warning (disable:4996)
 
-struct msg
+typedef struct msg
 {
 	char name[10];
 	char sex[10];
-	char age;
+	char age[5];
 	char tel[20];
 	char address[20];
-}message[1000];
+}Msg;
 
-//结构体数组下标
-int count = 0;
+Msg message[ROW];
 
-//打印菜单选项栏
+
 void menu()
 {
 	printf("*************************************************************\n");
@@ -33,29 +32,37 @@ void menu()
 	printf("*************************************************************\n");
 }
 
-//1.    添加联系人信息
-void addMessage()
+
+int addMessage(Msg message[ROW], int count)
 {
-	if (count < 1000)
+	char sign = 'y';
+	while ((count < ROW) && ((sign == 'Y') || (sign == 'y')))
 	{
 		printf("name\tsex\tage\ttel\t\taddress\n");
-		scanf("%s %s %d %s %s", &message[count].name, &message[count].sex,
+		scanf("%s %s %s %s %s", &message[count].name, &message[count].sex,
 			&message[count].age, &message[count].tel, &message[count].address);
 		count++;
 		printf("Congratulations,you successed addMessage!\n");
+		printf("Can you want to addmessage again?(Y|N)\n");
+		getchar();
+		scanf("%c", &sign);
 	}
-	else
+	if (count >= ROW)
 	{
-		printf("error : mail list is full!\n");
+		printf("Your mail list is full!\n");
 	}
+	if ((sign != 'n') && (sign != 'N'))
+	{
+		printf("error input!\n");
+	}
+	return count;
 }
 
-//2.    删除指定联系人信息
-void deleteMessage()
+int deleteMessage(Msg message[ROW], int count)
 {
 	if (count == 0)
 	{
-		printf("You have no mail list to dellete!\n");
+		printf("Your mail list is empty!\n");
 	}
 	else
 	{
@@ -67,18 +74,36 @@ void deleteMessage()
 		{
 			if (strcmp(name, message[i].name) == 0)
 			{
-				int j = 0;
-				for (j = i; j < count-1; j++)
+				if (i == count - 1)
 				{
-					message[j] = message[j + 1];
+					memset(&message[i], 0, sizeof(Msg));
+				}
+				else
+				{
+					int j = 0;
+					for (j = i; j < count - 1; j++)
+					{
+						strcpy(message[j].name, message[j + 1].name);
+						strcpy(message[j].sex, message[j + 1].sex);
+						strcpy(message[j].age, message[j + 1].age);
+						strcpy(message[j].tel, message[j + 1].tel);
+						strcpy(message[j].address, message[j + 1].address);
+					}
+					printf("Delete success!\n");
+					return count - 1;
 				}
 			}
 		}
+		if (i == count)
+		{
+			printf("No man.\n");
+		}
 	}
+	return count;
 }
 
-//3.    查找指定联系人信息
-void findMessage()
+
+void findMessage(Msg message[ROW], int count)
 {
 	if (count)
 	{
@@ -90,9 +115,15 @@ void findMessage()
 		{
 			if (strcmp(name, message[i].name) == 0)
 			{
-				printf("%s\t%s\t%d\t%s\t%s\n", message[i].name, message[i].sex,
+				printf("name\tsex\tage\ttel\t\taddress\n");
+				printf("%s\t%s\t%s\t%s\t%s\n", message[i].name, message[i].sex,
 					message[i].age, message[i].tel, message[i].address);
+				break;
 			}
+		}
+		if (i == count)
+		{
+			printf("no man!\n");
 		}
 	}
 	else
@@ -101,8 +132,8 @@ void findMessage()
 	}
 }
 
-//4.    修改指定联系人信息
-void changeMessage()
+
+void changeMessage(Msg message[ROW], int count)
 {
 	if (count)
 	{
@@ -114,55 +145,68 @@ void changeMessage()
 		{
 			if (strcmp(name, message[i].name) == 0)
 			{
-		again:	printf("Please input message you want to change(name|sex|age|tel|address)->");
-				char input[20];
+			again:	printf("Please input message you want to change(name|sex|age|tel|address)->");
+				char input[10];
 				char change[20];
 				scanf("%s", input);
 				if (strcmp(input, "name") == 0)
 				{
 					printf("Please input new name ->");
 					scanf("%s", change);
-				//	message[i].name = change;
+					strcpy(message[i].name, change);
 				}
-				if (strcmp(input, "sex") == 0)
+				else if (strcmp(input, "sex") == 0)
 				{
 					printf("Please input sex ->");
-					scanf("%s", message[i].sex);
+					scanf("%s", change);
+					strcpy(message[i].sex, change);
 				}
-				if (strcmp(input, "age") == 0)
+				else if (strcmp(input, "age") == 0)
 				{
 					printf("Please input age ->");
-					scanf("%s", message[i].age);
+					scanf("%s", change);
+					strcpy(message[i].age, change);
 				}
-				if (strcmp(input, "tel") == 0)
+				else if (strcmp(input, "tel") == 0)
 				{
 					printf("Please input new tel ->");
-					scanf("%s", message[i].tel);
+					scanf("%s", change);
+					strcpy(message[i].tel, change);
 				}
-				if (strcmp(input, "address") == 0)
+				else if (strcmp(input, "address") == 0)
 				{
 					printf("Please input new address ->");
-					scanf("%s", message[i].address);
+					scanf("%s", change);
+					strcpy(message[i].address, change);
+				}
+				else
+				{
+					goto again;
 				}
 				printf("Congratulationgs,you successed changemessage!\n");
 				printf("Are you want to changed again?(Y|N)\n");
 				char s = 0;
-				scanf("%c", s);
-				if (strcmp(s, 'Y') == 0)
+				getchar();
+				scanf("%c", &s);
+				if ((s == 'y') || (s == 'Y'))
 				{
 					goto again;
 				}
-				if (strcmp(s, 'N') == 0)
+				if ((s == 'n') || (s == 'N'))
 				{
 					break;
 				}
 			}
 		}
 	}
+	else
+	{
+		printf("Your mail list is empty!\n");
+	}
 }
 
-//5.    显示所有联系人信息
-void desplayMessage()
+
+void desplayMessage(Msg message[ROW], int count)
 {
 	if (count != 0)
 	{
@@ -170,7 +214,7 @@ void desplayMessage()
 		printf("name\tsex\tage\ttel\t\taddress\n");
 		for (i = 0; i < count; i++)
 		{
-			printf("%s\t%s\t%d\t%s\t%s\n", message[i].name, message[i].sex,
+			printf("%s\t%s\t%s\t%s\t%s\n", message[i].name, message[i].sex,
 				message[i].age, message[i].tel, message[i].address);
 		}
 	}
@@ -180,21 +224,43 @@ void desplayMessage()
 	}
 }
 
-void clearMessage()
+int clearMessage(Msg message[ROW], int count)
 {
-	memset(&message, 0, sizeof (struct msg));
+	memset(message, 0, ROW*sizeof(Msg));
+	count = 0;
+	desplayMessage(message, count);
+	return count;
 }
 
-void nameSort()
+void nameSort(Msg message[ROW], int count)
 {
-
+	if (count == 0)
+	{
+		printf("Your mail list is empty!\n");
+	}
+	else if (count > 1)
+	{
+		Msg tmp;
+		int i = 0;
+		for (i = 0; i < count - 1; i++)
+		{
+			int j = 0;
+			for (j = i + 1; j < count; j++)
+			if (strcmp(message[i].name, message[j].name) > 0)
+			{
+				tmp = message[i];
+				message[i] = message[j];
+				message[j] = tmp;
+			}
+		}
+	}
+	desplayMessage(message, count);
 }
-
-
 
 int main()
 {
 	int input = 0;
+	int count = 0;
 	menu();
 	while (1)
 	{
@@ -206,25 +272,25 @@ int main()
 			exit(0);
 			break;
 		case 1:
-			addMessage();
+			count = addMessage(message, count);
 			break;
 		case 2:
-			deleteMessage();
+			count = deleteMessage(message, count);
 			break;
 		case 3:
-			findMessage();
+			findMessage(message, count);
 			break;
 		case 4:
-			changeMessage();
+			changeMessage(message, count);
 			break;
 		case 5:
-			desplayMessage();
+			desplayMessage(message, count);
 			break;
 		case 6:
-			clearMessage();
+			count = clearMessage(message, count);
 			break;
 		case 7:
-			nameSort();
+			nameSort(message, count);
 			break;
 		default:
 			break;
