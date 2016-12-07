@@ -1,4 +1,3 @@
-
 #include<stdio.h>
 #include<windows.h>
 #include<stdlib.h>
@@ -14,6 +13,7 @@ typedef struct msg
 	char address[20];
 }Msg;
 
+//定义结构体数组
 Msg message[ROW];
 
 //打印菜单选项栏
