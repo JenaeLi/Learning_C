@@ -3,7 +3,6 @@
 #include<stdlib.h>
 #define ROW 1000
 #pragma warning (disable:4996)
-
 typedef struct msg
 {
 	char name[10];
@@ -12,10 +11,7 @@ typedef struct msg
 	char tel[20];
 	char address[20];
 }Msg;
-
-//定义结构体数组
 Msg message[ROW];
-
 //打印菜单选项栏
 void menu()
 {
@@ -32,7 +28,6 @@ void menu()
 	printf("*************************************************************\n");
 	printf("*************************************************************\n");
 }
-
 //1.    添加联系人信息
 int addMessage(Msg message[ROW], int count)
 {
@@ -58,7 +53,6 @@ int addMessage(Msg message[ROW], int count)
 	}
 	return count;
 }
-
 //2.    删除指定联系人信息
 int deleteMessage(Msg message[ROW], int count)
 {
@@ -79,6 +73,8 @@ int deleteMessage(Msg message[ROW], int count)
 				if (i == count - 1)
 				{
 					memset(&message[i], 0, sizeof(Msg));
+					printf("Delete success!\n");
+					return count - 1;
 				}
 				else
 				{
@@ -103,7 +99,6 @@ int deleteMessage(Msg message[ROW], int count)
 	}
 	return count;
 }
-
 //3.    查找指定联系人信息
 void findMessage(Msg message[ROW], int count)
 {
@@ -133,7 +128,6 @@ void findMessage(Msg message[ROW], int count)
 		printf("Your mail list is empty!\n");
 	}
 }
-
 //4.    修改指定联系人信息
 void changeMessage(Msg message[ROW], int count)
 {
@@ -206,11 +200,10 @@ void changeMessage(Msg message[ROW], int count)
 		printf("Your mail list is empty!\n");
 	}
 }
-
 //5.    显示所有联系人信息
 void desplayMessage(Msg message[ROW], int count)
 {
-	if (count != 0)
+	if (count)
 	{
 		int i = 0;
 		printf("name\tsex\tage\ttel\t\taddress\n");
@@ -225,7 +218,6 @@ void desplayMessage(Msg message[ROW], int count)
 		printf("Your mail list is empty!\n");
 	}
 }
-
 //6.    清空所有联系人
 int clearMessage(Msg message[ROW], int count)
 {
@@ -234,15 +226,10 @@ int clearMessage(Msg message[ROW], int count)
 	desplayMessage(message, count);
 	return count;
 }
-
 //7.    以名字排序所有联系人
 void nameSort(Msg message[ROW], int count)
 {
-	if (count == 0)
-	{
-		printf("Your mail list is empty!\n");
-	}
-	else if (count > 1)
+	if (count > 1)
 	{
 		Msg tmp;
 		int i = 0;
@@ -260,7 +247,6 @@ void nameSort(Msg message[ROW], int count)
 	}
 	desplayMessage(message, count);
 }
-
 int main()
 {
 	int input = 0;
@@ -297,6 +283,7 @@ int main()
 			nameSort(message, count);
 			break;
 		default:
+			printf("error input!\n");
 			break;
 		}
 	}
