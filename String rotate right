@@ -1,0 +1,91 @@
+#include<stdio.h>
+#include<windows.h>
+#include<assert.h>
+#pragma warning (disable:4996)
+
+//one :
+
+void RightLoopMove(char *pStr, unsigned short steps)
+{
+	assert(pStr);
+	assert(steps > 0);
+	int len = strlen(pStr);
+	steps %= len;
+	if (steps)
+	{
+		int i = 0;
+		for (i = 0; i < steps; i++)
+		{
+			char* p = pStr + len - 1;
+			char tmp = *p;
+			while (p != pStr)
+			{
+				*p = *(p - 1);
+				p--;
+			}
+			*p = tmp;
+		}
+	}
+}
+
+//two : 
+
+static void swap(char* x, char* y)
+{
+	assert(x);
+	assert(y);
+	*x ^= *y;
+	*y ^= *x;
+	*x ^= *y;
+}
+static void reverse(char* start, char* end)
+{
+	assert(start);
+	assert(end);
+	while (start < end)
+	{
+		swap(start, end);
+		start++, end--;
+	}
+}
+void RightLoopMove(char *pStr, unsigned short steps)
+{
+	assert(pStr);
+	assert(steps > 0);
+	int len = strlen(pStr);
+	steps %= len;
+	char* start = pStr;
+	char* middle = pStr + steps - 1;
+	char* end = pStr + len - 1;
+	reverse(start, end);
+	reverse(start, middle);
+	reverse(middle + 1, end);
+}
+
+//three :
+
+void RightLoopMove(char *pStr, unsigned short steps)
+{
+	assert(pStr);
+	assert(steps > 0);
+	int len = strlen(pStr);
+	steps %= len;
+	char* str = (char*)malloc(sizeof(char)*len * 2 + 1);
+	strcpy(str, pStr);
+	strcat(str, pStr);
+	strncpy(pStr, str + len - steps, len);
+	free(str);
+	str = NULL;
+}
+
+int main()
+{
+	char str[] = "abcdefgh";
+	unsigned short steps = 9;
+	printf("Please input : ");
+	scanf("%hu", &steps);
+	RightLoopMove(str, steps);
+	printf("%s\n", str);
+	system("pause");
+	return 0;
+}
