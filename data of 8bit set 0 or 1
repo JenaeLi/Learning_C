@@ -1,0 +1,33 @@
+#include<stdio.h>
+#include<windows.h>
+#include<assert.h>
+#pragma warning (disable:4996)
+
+void bit_set(unsigned char *p_data, unsigned char position, int flag)
+{
+	assert(p_data);
+	if (position >= 1 || position <= 8)
+	{
+		if (flag)
+		{
+			*p_data |= 1 << (position - 1);
+		}
+		else
+		{
+			*p_data &= (~(1 << (position - 1)));
+		}
+	}
+	else
+	{
+		printf("error position!\n");
+	}
+}
+int main()
+{
+	unsigned char num = 255;
+	printf("before	:	num = %d\n", num);
+	bit_set(&num, 8, 0);
+	printf("end	:	num = %d\n", num);
+	system("pause");
+	return 0;
+}
