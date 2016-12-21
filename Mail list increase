@@ -1,0 +1,359 @@
+#ifndef _MAILLIST_H_
+#define _MAILLIST_H_
+
+#include<stdio.h>
+#include<windows.h>
+#include<assert.h>
+#define INIT_MAIL_SIZE 1
+#define INC_SIZE 64
+#pragma warning (disable:4996)
+typedef struct person
+{
+	char name[32];
+	char sex[4];
+	char age[4];
+	char tel[16];
+	char address[64];
+}person_t,*person_p,**person_pp;
+typedef struct mail
+{
+	int size;
+	int cap;
+	person_p maillist;
+}mail_t,*mail_p,**mail_pp;
+void menu();
+void initMail(mail_pp m);
+void addMail(mail_p m);
+void deleteMail(mail_p m);
+void findMail(mail_p m);
+void changeMail(mail_p m);
+void desplayMail(mail_p m);
+void clearMail(mail_p m);
+void nameSort(mail_p m);
+void desdoryMail(mail_p m);
+#endif 
+
+
+
+
+#include "mail.h"
+
+int main()
+{
+	mail_p mymail = NULL;
+	initMail(&mymail);
+	int input = 0;
+	menu();
+	while (1)
+	{
+		printf("Please choose <0—7> : ");
+		scanf("%d", &input);
+		switch (input)
+		{
+		case 0:
+			exit(0);
+			break;
+		case 1:
+			addMail(mymail);
+			break;
+		case 2:
+			deleteMail(mymail);
+			break;
+		case 3:
+			findMail(mymail);
+			break;
+		case 4:
+			changeMail(mymail);
+			break;
+		case 5:
+			desplayMail(mymail);
+			break;
+		case 6:
+			clearMail(mymail);
+			break;
+		case 7:
+			nameSort(mymail);
+			break;
+		default:
+			printf("error input!\n");
+			break;
+		}
+	}
+	desdoryMail(mymail);
+	system("pause");
+	return 0;
+}
+
+
+
+
+#include "mail.h"
+
+
+static int isMailFull(mail_p m)
+{
+	assert(m);
+	return m->size >= m->cap ? 1 : 0;
+}
+
+static int isMailEmpty(mail_p m)
+{
+	assert(m);
+	if (m->size == 0)
+	{
+		printf("Your maillist is empty!\n");
+		return 1;
+	}
+	return 0;
+}
+
+static int incMail(mail_p m)
+{
+	assert(m);
+	person_p p = realloc(m->maillist, (m->cap + INC_SIZE)*sizeof(person_t));
+	if (NULL == p)
+	{
+		perror("realloc");
+		return 0;
+	}
+	m->maillist = p;
+	m->cap += INC_SIZE;
+	printf("inc success!\n");
+	return 1;
+}
+
+static int strCmp(const void* x, const void* y)
+{
+	return strcmp((*(person_p)x).name, (*(person_p)y).name);
+}
+
+static void swap(person_p x, person_p y)
+{
+	person_t tmp = *x;
+	*x = *y;
+	*y = tmp;
+}
+
+void menu()
+{
+	printf("*************************************************************\n");
+	printf("*************************************************************\n");
+	printf("*******************  1. 添加联系人信息       ****************\n");
+	printf("*******************  2. 删除指定联系人信息   ****************\n");
+	printf("*******************  3. 查找指定联系人信息   ****************\n");
+	printf("*******************  4. 修改指定联系人信息   ****************\n");
+	printf("*******************  5. 显示所有联系人信息   ****************\n");
+	printf("*******************  6. 清空所有联系人       ****************\n");
+	printf("*******************  7. 以名字排序所有联系人 ****************\n");
+	printf("*******************  0. 退出                 ****************\n");
+	printf("*************************************************************\n");
+	printf("*************************************************************\n");
+}
+
+void initMail(mail_pp m)
+{
+	assert(m);
+	*m = (mail_p)malloc(sizeof(mail_t));
+	if (NULL == *m)
+	{
+		perror("malloc");
+		exit(1);
+	}
+	(*m)->maillist = (person_p)malloc(sizeof(person_t)*INIT_MAIL_SIZE);
+	if (NULL == (*m)->maillist)
+	{
+		perror("malloc");
+		exit(2);
+	}
+	(*m)->cap = INIT_MAIL_SIZE;
+	(*m)->size = 0;
+}
+
+void desdoryMail(mail_p m)
+{
+	assert(m);
+	free(m->maillist);
+	m->maillist = NULL;
+	free(m);
+	m = NULL;
+}
+
+void addMail(mail_p m)
+{
+	assert(m);
+	person_t p;
+	printf("name\tsex\tage\ttel\t\taddress\n");
+	scanf("%s %s %s %s %s", &p.name, &p.sex, &p.age, &p.tel, &p.address);
+	if ((!isMailFull(m)) || incMail(m))
+	{
+		int pos = m->size;
+		m->maillist[pos] = p;
+		m->size++;
+	}
+	printf("Congratulations,you successed addMessage!\n");
+}
+
+void deleteMail(mail_p m)
+{
+	assert(m);
+	if (!isMailEmpty(m))
+	{
+		char name[32];
+		printf("Please input the name maillist you delete : ");
+		scanf("%s", name);
+		int i = 0;
+		for (i = 0; i < m->size; i++)
+		{
+			if (strcmp(m->maillist[i].name, name) == 0)
+			{
+				swap(m->maillist+i, m->maillist+m->size - 1);
+				m->size--;
+			}
+		}
+		if (i == m->size)
+		{
+			printf("no man!\n");
+		}
+	}
+}
+
+void findMail(mail_p m)
+{
+	assert(m);
+	if (!isMailEmpty(m))
+	{
+		char name[32];
+		printf("Please input the name of maillist you find : ");
+		scanf("%s", name);
+		int i = 0;
+		for (i = 0; i < m->size; i++)
+		{
+			if (strcmp(m->maillist[i].name, name) == 0)
+			{
+				printf("name\tsex\tage\ttel\t\taddress\n");
+				printf("%s\t%s\t%s\t%s\t%s\n", m->maillist[i].name, m->maillist[i].sex,
+					m->maillist[i].age, m->maillist[i].tel, m->maillist[i].address);
+				break;
+			}
+		}
+		if (i == m->size)
+		{
+			printf("no man!\n");
+		}
+	}
+}
+
+void changeMail(mail_p m)
+{
+	assert(m);
+	if (!isMailEmpty(m))
+	{
+		printf("Please input the name of list you want to change ->");
+		char name[32];
+		scanf("%s", name);
+		int i;
+		for (i = 0; i < m->size; i++)
+		{
+			if (strcmp(name, m->maillist[i].name) == 0)
+			{
+			again:	printf("Please input message you want to change(name|sex|age|tel|address)->");
+				char input[16];
+				char change[64];
+				scanf("%s", input);
+				if (strcmp(input, "name") == 0)
+				{
+					printf("Please input new name ->");
+					scanf("%s", change);
+					strcpy(m->maillist[i].name, change);
+				}
+				else if (strcmp(input, "sex") == 0)
+				{
+					printf("Please input sex ->");
+					scanf("%s", change);
+					strcpy(m->maillist[i].sex, change);
+				}
+				else if (strcmp(input, "age") == 0)
+				{
+					printf("Please input age ->");
+					scanf("%s", change);
+					strcpy(m->maillist[i].age, change);
+				}
+				else if (strcmp(input, "tel") == 0)
+				{
+					printf("Please input new tel ->");
+					scanf("%s", change);
+					strcpy(m->maillist[i].tel, change);
+				}
+				else if (strcmp(input, "address") == 0)
+				{
+					printf("Please input new address ->");
+					scanf("%s", change);
+					strcpy(m->maillist[i].address, change);
+				}
+				else
+				{
+					goto again;
+				}
+				printf("Congratulationgs,you successed changemessage!\n");
+				printf("Are you want to changed again?(Y|N)\n");
+				char s = 0;
+				getchar();
+				scanf("%c", &s);
+				if ((s == 'y') || (s == 'Y'))
+				{
+					goto again;
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+		if (i == m->size)
+		{
+			printf("no man\n");
+		}
+	}
+}
+
+void desplayMail(mail_p m)
+{
+	assert(m);
+	if (!isMailEmpty(m))
+	{
+		printf("name\tsex\tage\ttel\t\taddress\n");
+		int i = 0;
+		for (i = 0; i < m->size; i++)
+		{
+			printf("%s\t%s\t%s\t%s\t%s\n", m->maillist[i].name, m->maillist[i].sex,
+				m->maillist[i].age, m->maillist[i].tel, m->maillist[i].address);
+		}
+	}
+}
+
+void clearMail(mail_p m)
+{
+	assert(m);
+	if (!isMailEmpty(m))
+	{
+		m->size = 0;
+		printf("clear mailist success!\n");
+	}
+}
+
+void nameSort(mail_p m)
+{
+	assert(m);
+	if (!isMailEmpty(m))
+	{
+		qsort(m->maillist, m->size, sizeof(person_t), strCmp);
+	}
+	desplayMail(m);
+}
+
+
+
+
+
+
+
