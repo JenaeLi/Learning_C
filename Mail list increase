@@ -1,6 +1,5 @@
 #ifndef _MAILLIST_H_
 #define _MAILLIST_H_
-
 #include<stdio.h>
 #include<windows.h>
 #include<assert.h>
