@@ -45,7 +45,6 @@ static int isMailFull(mail_p m)
 	assert(m);
 	return m->size >= m->cap ? 1 : 0;
 }
-
 static int isMailEmpty(mail_p m)
 {
 	assert(m);
