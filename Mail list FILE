@@ -1,6 +1,5 @@
 #ifndef _MAILLIST_H_
 #define _MAILLIST_H_
-
 #include<stdio.h>
 #include<windows.h>
 #include<assert.h>
@@ -22,7 +21,6 @@ typedef struct mail
 	int cap;
 	person_p maillist;
 }mail_t, *mail_p, **mail_pp;
-
 void menu();
 void initMail(mail_pp m);
 void addMail(mail_p m, person_p p);
@@ -33,10 +31,8 @@ void desplayMail(mail_p m);
 void clearMail(mail_p m);
 void nameSort(mail_p m);
 void desdoryMail(mail_p m);
-
 int fileStore(mail_p m);
 int fileLoad(mail_p m);
-
 #endif 
 
 
@@ -44,7 +40,6 @@ int fileLoad(mail_p m);
 
 
 #include "maillist.h"
-
 static int isMailFull(mail_p m)
 {
 	assert(m);
@@ -61,7 +56,6 @@ static int isMailEmpty(mail_p m)
 	}
 	return 0;
 }
-
 static int incMail(mail_p m)
 {
 	assert(m);
@@ -76,19 +70,16 @@ static int incMail(mail_p m)
 	printf("inc success!\n");
 	return 1;
 }
-
 static int strCmp(const void* x, const void* y)
 {
 	return strcmp((*(person_p)x).name, (*(person_p)y).name);
 }
-
 static void swap(person_p x, person_p y)
 {
 	person_t tmp = *x;
 	*x = *y;
 	*y = tmp;
 }
-
 void menu()
 {
 	printf("*************************************************************\n");
@@ -104,7 +95,6 @@ void menu()
 	printf("*************************************************************\n");
 	printf("*************************************************************\n");
 }
-
 void initMail(mail_pp m)
 {
 	assert(m);
@@ -124,7 +114,6 @@ void initMail(mail_pp m)
 	(*m)->size = 0;
 	fileLoad(*m);
 }
-
 int fileLoad(mail_p m)
 {
 	assert(m);
@@ -147,7 +136,6 @@ int fileLoad(mail_p m)
 	fclose(fp);
 	return 0;
 }
-
 int fileStore(mail_p m)
 {
 	assert(m);
@@ -165,7 +153,6 @@ int fileStore(mail_p m)
 	fclose(fp);
 	return 0;
 }
-
 void desdoryMail(mail_p m)
 {
 	assert(m);
@@ -186,7 +173,6 @@ void addMail(mail_p m, person_p p)
 		m->size++;
 	}
 }
-
 void deleteMail(mail_p m)
 {
 	assert(m);
@@ -210,7 +196,6 @@ void deleteMail(mail_p m)
 		}
 	}
 }
-
 void findMail(mail_p m)
 {
 	assert(m);
@@ -236,7 +221,6 @@ void findMail(mail_p m)
 		}
 	}
 }
-
 void changeMail(mail_p m)
 {
 	assert(m);
@@ -309,7 +293,6 @@ void changeMail(mail_p m)
 		}
 	}
 }
-
 void desplayMail(mail_p m)
 {
 	assert(m);
@@ -324,7 +307,6 @@ void desplayMail(mail_p m)
 		}
 	}
 }
-
 void clearMail(mail_p m)
 {
 	assert(m);
@@ -351,7 +333,6 @@ void nameSort(mail_p m)
 
 
 #include "maillist.h"
-
 static void myAddMail(mail_p m)
 {
 	assert(m);
@@ -361,7 +342,6 @@ static void myAddMail(mail_p m)
 	addMail(m, &p);
 	printf("Congratulations,you successed addMessage!\n");
 }
-
 int main()
 {
 	mail_p mymail = NULL;
