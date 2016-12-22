@@ -1,3 +1,4 @@
+
 #ifndef _MAILLIST_H_
 #define _MAILLIST_H_
 #include<stdio.h>
@@ -21,6 +22,7 @@ typedef struct mail
 	int cap;
 	person_p maillist;
 }mail_t, *mail_p, **mail_pp;
+
 void menu();
 void initMail(mail_pp m);
 void addMail(mail_p m, person_p p);
