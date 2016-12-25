@@ -1,0 +1,270 @@
+#ifndef _SEQLIST_
+#define _SEQLIST_
+
+#include<windows.h>
+#include<stdio.h>
+#include<assert.h>
+
+
+typedef int DATATYPE;
+#define MAXSIZE 10
+typedef struct Seqlist
+{
+	DATATYPE array[MAXSIZE];
+	int size;
+}SeqList;
+
+void InitSeqList(SeqList* pSeq);
+void PushBack(SeqList* pSeq, DATATYPE data);
+void PopBack(SeqList* pSeq);
+void PushFront(SeqList* pSeq, DATATYPE data);
+void PopFront(SeqList* pSeq);
+void Insert(SeqList* pSeq, size_t pos, DATATYPE data);
+void Erase(SeqList* pSeq, size_t pos);
+void PrintSeqList(SeqList* pSeq);
+int Find(SeqList* pSeq, DATATYPE data);
+void Remove(SeqList* pSeq, DATATYPE data);
+//void RemoveAll(SeqList* pSeq, DATATYPE data);
+//void ButtleSort(SeqList* pSeq);
+//void SelectSort(SeqList* pSeq);
+//int BinarySearch(SeqList* pSeq, DATATYPE data);
+
+
+
+
+
+#endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include "seqlist.h"
+
+void InitSeqList(SeqList* pSeq)//初始化
+{
+	assert(pSeq);
+	memset(pSeq->array, 0, sizeof(pSeq->array));
+	pSeq->size = 0;
+}
+
+void PushBack(SeqList* pSeq, DATATYPE data)//尾插法
+{
+	assert(pSeq);
+	if (pSeq->size >= MAXSIZE)
+	{
+		return;
+	}
+	else
+	{
+		pSeq->array[pSeq->size++] = data;
+	}
+}
+
+void PopBack(SeqList* pSeq)//尾删法
+{
+	assert(pSeq);
+	if (0 == pSeq->size)
+	{
+		return;
+	}
+	else
+	{
+		pSeq->size--;
+	}
+}
+
+void PushFront(SeqList* pSeq, DATATYPE data)//头插法
+{
+	assert(pSeq);
+	if (pSeq->size >= MAXSIZE)
+	{
+		return;
+	}
+	else
+	{
+		int i = 0;
+		for (i = pSeq->size; i > 0; i--)
+		{
+			pSeq->array[i] = pSeq->array[i - 1];
+		}
+		pSeq->array[0] = data;
+		pSeq->size++;
+	}
+}
+
+void PopFront(SeqList* pSeq)//头删法
+{
+	assert(pSeq);
+	if (0 == pSeq->size)
+	{
+		return;
+	}
+	else
+	{
+		int i = 0;
+		for (i = 0; i < pSeq->size-1; i++)
+		{
+			pSeq->array[i] = pSeq->array[i + 1];
+		}
+		pSeq->size--;
+	}
+}
+
+void Insert(SeqList* pSeq, size_t pos, DATATYPE data)//确定位置插入
+{
+	assert(pSeq);
+	assert(pos <= pSeq->size);
+	if (pSeq->size >= MAXSIZE)
+	{
+		return;
+	}
+	else
+	{
+		int i = 0;
+		for (i = pSeq->size; i > pos; i--)
+		{
+			pSeq->array[i] = pSeq->array[i - 1];
+		}
+		pSeq->array[pos] = data;
+		pSeq->size++;
+	}
+}
+
+void Erase(SeqList* pSeq, size_t pos)//确定位置删除
+{
+	assert(pSeq);
+	if (0 == pSeq->size)
+	{
+		return;
+	}
+	else
+	{
+		int i = 0;
+		for (i = pos; i < pSeq->size - 1; i++)
+		{
+			pSeq->array[i] = pSeq->array[i + 1];
+		}
+		pSeq->size--;
+	}
+}
+
+void PrintSeqList(SeqList* pSeq)//打印
+{
+	assert(pSeq);
+	int i = 0;
+	for (i = 0; i < pSeq->size; i++)
+	{
+		printf("%d ", pSeq->array[i]);
+	}
+	printf("\n");
+}
+
+int Find(SeqList* pSeq, DATATYPE data)//查找
+{
+	if (0 == pSeq->size)
+	{
+		return;
+	}
+	else
+	{
+		int i = 0;
+		for (i = 0; i < pSeq->size; i++)
+		{
+			if (pSeq->array[i] == data)
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+}
+
+void Remove(SeqList* pSeq, DATATYPE data)//按元素删除
+{
+	assert(pSeq);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include "seqlist.h"
+
+void Function1()
+{
+	SeqList seq;
+	InitSeqList(&seq);
+	PushBack(&seq, 1);
+	PushBack(&seq, 2);
+	PushBack(&seq, 3);
+	PushBack(&seq, 4);
+	PushBack(&seq, 5);
+	PopBack(&seq);
+	PushFront(&seq, 0);
+	PopFront(&seq);
+}
+
+void Function2()
+{
+	SeqList seq;
+	InitSeqList(&seq);
+	PushBack(&seq, 1);
+	PushBack(&seq, 2);
+	PushBack(&seq, 3);
+	PushBack(&seq, 4);
+	PushBack(&seq, 5);
+	Insert(&seq, 3, 6);
+	Erase(&seq, 3);
+	PrintSeqList(&seq);
+	int pos = Find(&seq, 3);
+}
+
+void Function3()
+{
+	SeqList seq;
+	InitSeqList(&seq);
+	PushBack(&seq, 1);
+	PushBack(&seq, 2);
+	PushBack(&seq, 3);
+	PushBack(&seq, 2);
+	PushBack(&seq, 4);
+	PushBack(&seq, 2);
+	PushBack(&seq, 5);
+	Remove(&seq, 2);
+}
+
+int main()
+{
+	//Function1();
+	//Function2();
+	Function3();
+	system("pause");
+	return 0;
+}
