@@ -5,7 +5,6 @@
 #include<stdio.h>
 #include<assert.h>
 
-
 typedef int DATATYPE;
 #define MAXSIZE 10
 typedef struct Seqlist
@@ -28,7 +27,6 @@ void RemoveAll(SeqList* pSeq, DATATYPE data);
 void ButtleSort(SeqList* pSeq);
 void SelectSort(SeqList* pSeq);
 int BinarySearch(SeqList* pSeq, DATATYPE data);
-
 
 #endif
 
@@ -395,7 +393,6 @@ static int BinarySearch1(SeqList* pSeq, DATATYPE data, int start, int end)
 	}
 	return -1;
 }
-
 
 
 
