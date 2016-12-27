@@ -1,0 +1,47 @@
+#include<stdio.h>
+#include<assert.h>
+#include<string.h>
+
+void swap(char **x, char **y )
+{
+	char tmp[64] = {0};
+	assert(x);
+	assert(y);
+	strcpy(tmp, x);
+	strcpy(x, y);
+	strcpy(y, tmp);
+}
+void strsort(char* str1[], int len )
+{
+	int j = 0;
+	int i = 0;
+	assert(str1);
+	for(;i < len - 1 ;i++)
+	{
+		for(j = 0;j < len - i - 1;j++)
+		{
+			if(strcmp(str1[j], str1[j+1]) > 0)
+			{
+				swap(&str1[j], &str1[j+1]);
+			}
+		}
+	}
+}
+void show(char *str1[],int len )
+{
+	int i = 0;
+	assert(str1);
+	for(;i < len ;i++)
+	{
+		printf("%s ", str1[i]);
+	}
+	printf("\n");
+}
+int main()
+{
+	char* str1[] = {"hello","bit_tech","world","bsrhfhb","gfshshbh","grjfd","vgrbdd","bhtb"};
+	int len = sizeof(str1)/sizeof(str1[0]);
+	strsort(str1, len );
+	show(str1, len);
+	return 0;
+}
