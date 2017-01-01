@@ -19,6 +19,12 @@ void PushFront(ppList ppHead, DataType data);
 void PopFront(ppList ppHead);
 pList FindList(pList pHead, DataType data);
 void Insert(ppList pos, DataType data);
+void PrintList(pList pHead);
+void ReversePrint(pList pHead);
+void Eraze(ppList ppHead, pList pos);
+void Remove(ppList ppHead, DataType data);
+void RemoveAll(ppList ppHead, DataType data);
+
 
 #endif
 
@@ -147,6 +153,122 @@ void Insert(ppList pos, DataType data)//在链表pos位置后插入值为data的
 	(*pos)->next = pCur;
 }
 
+void PrintList(pList pHead)//打印
+{
+	if (NULL == pHead)
+	{
+		return;
+	}
+	while (pHead)
+	{
+		printf("%d->", pHead->data);
+		pHead = pHead->next;
+	}
+	printf("NULL\n");
+}
+
+void ReversePrint(pList pHead)//递归逆序打印
+{
+	if (NULL == pHead)
+	{
+		return;
+	}
+	ReversePrint(pHead->next);
+	printf("%d->", pHead->data);
+}
+
+void Eraze(ppList ppHead, pList pos)// 删除单链表pos位置上的结点
+{
+	assert(ppHead);
+	if (NULL == *ppHead||NULL == pos)
+	{
+		return;
+	}
+	if ((*ppHead) == pos)
+	{
+		(*ppHead) = (*ppHead)->next;
+		free(pos);
+		pos = NULL;
+	}
+	else
+	{
+		pList pPre = *ppHead;
+		while (pPre->next != pos)
+		{
+			pPre = pPre->next;
+		}
+		pPre->next = pos->next;
+		free(pos);
+		pos = NULL;
+	}
+}
+
+void Remove(ppList ppHead, DataType data)// 移除链表中第一个值为data的结点
+{
+	assert(ppHead);
+	Eraze(ppHead, FindList(*ppHead, data));
+	//if (NULL == *ppHead)
+	//{
+	//	return;
+	//}
+	//pList pDel = *ppHead;
+	//if ((*ppHead)->data == data)
+	//{
+	//	*ppHead = (*ppHead)->next;
+	//	free(pDel);
+	//	pDel = NULL;
+	//}
+	//else
+	//{
+	//	pDel = *ppHead;
+	//	pList pPre = *ppHead;
+	//	while (pDel)
+	//	{
+	//		if (pDel->data == data)
+	//		{
+	//			pPre->next = pDel->next;
+	//			free(pDel);
+	//			pDel = NULL;
+	//			break;
+	//		}
+	//		pPre = pDel;
+	//		pDel = pDel->next;
+	//	}
+	//}
+}
+
+void RemoveAll(ppList ppHead, DataType data)// 移除链表中所有值为data的结点
+{
+	assert(ppHead);
+	if (NULL == *ppHead)
+	{
+		return;
+	}
+	pList pDel = (*ppHead)->next;
+	pList pPre = *ppHead;
+	while (pDel)
+	{
+		if (pDel->data == data)
+		{
+			pPre->next = pDel->next;
+			free(pDel);
+			pDel = pPre->next;
+		}
+		else
+		{
+			pPre = pDel;
+			pDel = pDel->next;
+		}
+	}
+	if ((*ppHead)->data == data)
+	{
+		*ppHead = (*ppHead)->next;
+		free(pDel);
+		pDel = NULL;
+	}
+}
+
+
 
 
 
@@ -158,31 +280,58 @@ void Function()
 	InitList(&pHead);
 	PushBack(&pHead, 1);
 	pos = FindList(pHead, 1);
-	Insert(pos, 5);
+	Insert(&pos, 5);
+	Eraze(&pHead, pos);
 	PushBack(&pHead, 2);
 	PushBack(&pHead, 3);
 	PushBack(&pHead, 4);
-
 	pos = FindList(pHead, 4);
-	Insert(pos, 5);
+	Insert(&pos, 5);
+	Eraze(&pHead, pos);
+	PrintList(pHead);
+	ReversePrint(pHead);
 	PopBack(&pHead);
 	PopBack(&pHead);
 	PopBack(&pHead);
 	PopBack(&pHead);
+	PrintList(pHead);
+	ReversePrint(pHead);
 	PushFront(&pHead, 0);
 	PushFront(&pHead, 7);
 	PushFront(&pHead, 8);
-	pos = FindList(pHead, 2);
+	pos = FindList(pHead, 0);
+	Eraze(&pHead, pos);
+	PrintList(pHead);
+	ReversePrint(pHead);
 	PopFront(&pHead);
 	PopFront(&pHead);
 	PopFront(&pHead);
 	pos = FindList(pHead, 2);
+}
 
+void Function1()
+{
+	pList pHead;
+	InitList(&pHead);
+	PushBack(&pHead, 1);
+	PushBack(&pHead, 1); 
+	PushBack(&pHead, 1);
+	PushBack(&pHead, 2);
+	PushBack(&pHead, 1);
+	PushBack(&pHead, 3);
+	PushBack(&pHead, 1);
+	PushBack(&pHead, 4);
+	PushBack(&pHead, 1);
+	PrintList(pHead);
+	//Remove(&pHead, 4);
+	RemoveAll(&pHead, 1);
+	PrintList(pHead);
 }
 
 int main()
 {
-	Function();
+	Function1();
+	//Function();
 	system("pause");
 	return 0;
 }
