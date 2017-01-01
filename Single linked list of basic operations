@@ -1,0 +1,191 @@
+#ifndef __LIST__
+#define __LIST__
+
+#include<stdio.h>
+#include<windows.h>
+#include<assert.h>
+
+typedef int DataType;
+typedef struct list
+{
+	struct list* next;
+	DataType data;
+}List, *pList, **ppList;
+
+void InitList(ppList ppHead);
+void PushBack(ppList ppHead, DataType data);
+void PopBack(ppList ppHead);
+void PushFront(ppList ppHead, DataType data);
+void PopFront(ppList ppHead);
+pList FindList(pList pHead, DataType data);
+void Insert(ppList pos, DataType data);
+
+#endif
+
+
+
+
+#include "list.h"
+
+static pList BuyNode(DataType data)//添加节点
+{
+	pList ptmp = (pList)malloc(sizeof(List));
+	if (ptmp)
+	{
+		ptmp->data = data;
+		ptmp->next = NULL;
+	}
+	return ptmp;
+}
+
+void InitList(ppList  ppHead)//初始化
+{
+	assert(ppHead);
+	*ppHead = NULL;
+}
+
+void PushBack(ppList ppHead, DataType data)//尾插法
+{
+	assert(ppHead);
+	if (NULL == *ppHead)
+	{
+		*ppHead = BuyNode(data);
+	}
+	else
+	{
+		pList pCurNode = *ppHead;
+		while (pCurNode->next)
+		{
+			pCurNode = pCurNode->next;
+		}
+		pCurNode->next = BuyNode(data);
+	}
+}
+
+void PopBack(ppList ppHead)//尾删法
+{
+	assert(ppHead);
+	if (NULL == *ppHead)
+	{
+		return;
+	}
+	else if (NULL == (*ppHead)->next)
+	{
+		free(*ppHead);
+		(*ppHead) = NULL;
+	}
+	else
+	{
+		pList pPre = *ppHead;
+		pList pCur = *ppHead;
+		while (pCur->next)
+		{
+			pPre = pCur;
+			pCur = pCur->next;
+		}
+		free(pCur);
+		pCur = NULL;
+		pPre->next = NULL;
+	}
+}
+
+void PushFront(ppList ppHead, DataType data)//头插法
+{
+	assert(ppHead);
+	pList pCur = BuyNode(data);
+	pCur->next = *ppHead;
+	(*ppHead) = pCur;
+}
+
+void PopFront(ppList ppHead)//头删
+{
+	assert(ppHead);
+	if (NULL == *ppHead)
+	{
+		return;
+	}
+	else if (NULL == (*ppHead)->next)
+	{
+		free(*ppHead);
+		*ppHead = NULL;
+	}
+	else
+	{
+		pList pCur = *ppHead;
+		*ppHead = (*ppHead)->next;
+		free(pCur);
+		pCur = NULL;
+	}
+}
+
+pList FindList(pList pHead, DataType data)//查找值为data的节点，找到返回地址，否则返回空
+{
+	if (NULL == pHead)
+	{
+		return NULL;
+	}
+	while (pHead)
+	{
+		if (pHead->data == data)
+		{
+			return pHead;
+		}
+		pHead = pHead->next;
+	}
+	return NULL;
+}
+
+void Insert(ppList pos, DataType data)//在链表pos位置后插入值为data的新节点
+{
+	assert(pos);
+	if (NULL == (*pos))
+	{
+		return;
+	}
+	pList pCur = BuyNode(data);
+	pCur->next = (*pos)->next;
+	(*pos)->next = pCur;
+}
+
+
+
+
+#include "list.h"
+
+void Function()
+{
+	pList pHead, pos;
+	InitList(&pHead);
+	PushBack(&pHead, 1);
+	pos = FindList(pHead, 1);
+	Insert(pos, 5);
+	PushBack(&pHead, 2);
+	PushBack(&pHead, 3);
+	PushBack(&pHead, 4);
+
+	pos = FindList(pHead, 4);
+	Insert(pos, 5);
+	PopBack(&pHead);
+	PopBack(&pHead);
+	PopBack(&pHead);
+	PopBack(&pHead);
+	PushFront(&pHead, 0);
+	PushFront(&pHead, 7);
+	PushFront(&pHead, 8);
+	pos = FindList(pHead, 2);
+	PopFront(&pHead);
+	PopFront(&pHead);
+	PopFront(&pHead);
+	pos = FindList(pHead, 2);
+
+}
+
+int main()
+{
+	Function();
+	system("pause");
+	return 0;
+}
+
+
+
