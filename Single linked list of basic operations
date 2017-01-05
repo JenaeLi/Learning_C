@@ -24,8 +24,12 @@ void ReversePrint(pList pHead);
 void Eraze(ppList ppHead, pList pos);
 void Remove(ppList ppHead, DataType data);
 void RemoveAll(ppList ppHead, DataType data);
-
-
+size_t Size(pList pHead);
+pList Front(pList pHead);
+pList Back(pList pHead);
+int Empty(pList pHead);
+void DeleteNotTailNode(pList pos);
+void InsertNotHeadNode(pList pos, DataType data);
 #endif
 
 
@@ -167,16 +171,6 @@ void PrintList(pList pHead)//打印
 	printf("NULL\n");
 }
 
-void ReversePrint(pList pHead)//递归逆序打印
-{
-	if (NULL == pHead)
-	{
-		return;
-	}
-	ReversePrint(pHead->next);
-	printf("%d->", pHead->data);
-}
-
 void Eraze(ppList ppHead, pList pos)// 删除单链表pos位置上的结点
 {
 	assert(ppHead);
@@ -268,6 +262,98 @@ void RemoveAll(ppList ppHead, DataType data)// 移除链表中所有值为data�
 	}
 }
 
+size_t Size(pList pHead)// 获取链表中结点的总个数
+{
+	if (NULL == pHead)
+	{
+		return 0;
+	}
+	size_t count = 0;
+	pList pCur = pHead;
+	while (pCur)
+	{
+		count++;
+		pCur = pCur->next;
+	}
+	return count;
+}
+
+pList Front(pList pHead)// 获取链表中第一个结点
+{
+	if (NULL == pHead)
+	{
+		return NULL;
+	}
+	return pHead;
+}
+
+pList Back(pList pHead)// 获取链表中最后一个节点
+{
+	if (NULL == pHead)
+	{
+		return NULL;
+	}
+	pList pPre = pHead;
+	while (pHead->next)
+	{
+		pPre = pHead->next;
+		pHead = pHead->next;
+	}
+	return pPre;
+}
+
+int Empty(pList pHead)// 判断链表是否为空
+{
+	if (NULL == pHead)
+	{
+		return 0;
+	}
+	return 1;
+}
+
+
+//////////////////  链表面试题  ////////////////////////
+
+void ReversePrint(pList pHead)//递归逆序打印
+{
+	if (NULL == pHead)
+	{
+		return;
+	}
+	ReversePrint(pHead->next);
+	printf("%d->", pHead->data);
+}
+
+void DeleteNotTailNode(pList pos)// 删除无头单链表的非尾结点，要求：不能遍历单链表
+{
+	if (NULL == pos)
+	{
+		return;
+	}
+	pList pCur = pos->next;
+	pos->data = pCur->data;
+	pos->next = pCur->next;
+	free(pCur);
+	pCur = NULL;
+}
+
+void InsertNotHeadNode(pList pos, DataType data)// 在无头单链表非头结点前插入新节点
+{
+	if (NULL == pos)
+	{
+		return;
+	}
+	pList pCur = BuyNode(data);
+	pCur->next = pos->next;
+	pos->next = pCur;
+	DataType tmp = pos->data;
+	pos->data = pCur->data;
+	pCur->data = tmp;
+}
+
+
+
+
 
 
 
@@ -311,10 +397,9 @@ void Function()
 
 void Function1()
 {
-	pList pHead;
+	pList pHead,front,back;
+	size_t count;
 	InitList(&pHead);
-	PushBack(&pHead, 1);
-	PushBack(&pHead, 1); 
 	PushBack(&pHead, 1);
 	PushBack(&pHead, 2);
 	PushBack(&pHead, 1);
@@ -322,9 +407,20 @@ void Function1()
 	PushBack(&pHead, 1);
 	PushBack(&pHead, 4);
 	PushBack(&pHead, 1);
-	PrintList(pHead);
+	PushBack(&pHead, 4);
+	//PrintList(pHead);
 	//Remove(&pHead, 4);
-	RemoveAll(&pHead, 1);
+	//RemoveAll(&pHead, 1);
+	//count = Size(pHead);
+	//printf("%d\n",count);
+	//front = Front(pHead);
+	//back = Back(pHead);
+	//printf("%d %d\n", front->data, back->data);
+	//InitList(&front);
+	//int flag = Empty(front);
+	//printf("%d\n", flag);
+	DeleteNotTailNode(FindList(pHead, 3));
+	InsertNotHeadNode(FindList(pHead, 2), 3);
 	PrintList(pHead);
 }
 
@@ -335,6 +431,4 @@ int main()
 	system("pause");
 	return 0;
 }
-
-
 
