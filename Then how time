@@ -1,0 +1,37 @@
+#include<stdio.h>
+#include<windows.h>
+#pragma warning(disable:4996)
+int Time(int begin, int waste)
+{
+	int minute = begin % 100 + waste % 60;
+	int hour = begin / 100 + waste / 60;
+	if (minute >= 60)
+	{
+		hour += minute / 60;
+		minute %= 60;
+	}
+	else if (minute < 0)
+	{
+		minute += 60;
+		hour -= 1;
+	}
+	return hour * 100 + minute;
+}
+
+int main()
+{
+	int begin = 0;
+	int waste = 0;
+	scanf("%d %d", &begin, &waste);
+	int end = Time(begin, waste);
+	if (end <= 2359)
+	{
+		printf("%d\n", end);
+	}
+	else
+	{
+		printf("error. \n");
+	}
+	system("pause");
+	return 0;
+}
