@@ -1,0 +1,181 @@
+#include <iostream>
+using namespace std;
+
+class Complex
+{
+public:
+	Complex(double real, double imag)//构造函数
+		: _real(real)
+		, _imag(imag)
+	{}
+	Complex()//构造函数
+	{}
+	Complex(const Complex & c)//拷贝构造函数
+	{
+		_real = c._real;
+		_imag = c._imag;
+	}
+	~Complex()//析构函数
+	{}
+
+	Complex operator +(const Complex & c)//重载+
+	{
+		Complex tmp;
+		tmp._real = this->_real + c._real;
+		tmp._imag = this->_imag + c._imag;
+		return tmp;
+	}
+	Complex operator -(const Complex & c)//重载-
+	{
+		Complex tmp;
+		tmp._real = this->_real - c._real;
+		tmp._imag = this->_imag - c._imag;
+		return tmp;
+	}
+	Complex operator *(const Complex & c)//重载*
+	{
+		Complex tmp;
+		tmp._real = (this->_real * c._real - this->_imag * c._imag);
+		tmp._imag = (c._real * this->_imag + this->_real * c._imag);
+		return tmp;
+	}
+	Complex operator /(const Complex & c)//重载/
+	{
+		Complex tmp;
+		tmp._real = (this->_real * c._real + this->_imag * c._imag) / 
+			(c._real * c._real + c._imag * c._imag);
+		tmp._imag = (c._real * this->_imag - this->_real * c._imag) / 
+			(c._real * c._real + c._imag * c._imag);
+		return tmp;
+	}
+	Complex& operator =(const Complex & c)//重载=
+	{
+		if (this != &c)
+		{
+			this->_real = c._real;
+			this->_imag = c._imag;
+		}
+		return *this;
+	}
+	Complex& operator +=(const Complex& c)//重载+=
+	{
+		this->_real += c._real;
+		this->_imag += c._imag;
+		return *this;
+	}
+	Complex& operator -=(const Complex& c)//重载-=
+	{
+		this->_real -= c._real;
+		this->_imag -= c._imag;
+		return *this;
+	}
+	Complex& operator *=(const Complex& c)//重载*=
+	{
+		Complex tmp;
+		tmp._real = (this->_real * c._real - this->_imag * c._imag);
+		tmp._imag = (c._real * this->_imag + this->_real * c._imag);
+		this->_real = tmp._real;
+		this->_imag = tmp._imag;
+		return *this;
+	}
+	Complex& operator/=(const Complex& c)//重载/=
+	{
+		Complex tmp;
+		tmp._real = (this->_real * c._real + this->_imag * c._imag) /
+			(c._real * c._real + c._imag * c._imag);
+		tmp._imag = (c._real * this->_imag - this->_real * c._imag) /
+			(c._real * c._real + c._imag * c._imag);
+		this->_real = tmp._real;
+		this->_imag = tmp._imag;
+		return *this;
+	}
+	bool operator >(const Complex& c)//重载>
+	{
+		if (this->_imag == c._imag)
+		{
+			if (this->_real > c._real)
+				return true;
+			return false;
+		}
+	}
+	bool operator >=(const Complex& c)//重载>=
+	{
+		if (this->_imag == c._imag)
+		{
+			if (this->_real >= c._real)
+				return true;
+			return false;
+		}
+	}
+	bool operator <(const Complex& c)//重载<
+	{
+		if (this->_imag == c._imag)
+		{
+			if (this->_real < c._real)
+				return true;
+			return false;
+		}
+	}
+	bool operator <=(const Complex& c)//重载<=
+	{
+		if (this->_imag == c._imag)
+		{
+			if (this->_real <= c._real)
+				return true;
+			return false;
+		}
+	}
+	bool operator ==(const Complex& c)//重载==
+	{
+		if ((this->_real == c._real) && (this->_imag == c._imag))
+			return true;
+		return false;
+	}
+	bool operator !=(const Complex& c)//重载!=
+	{
+		if ((this->_real == c._real) && (this->_imag == c._imag))
+			return false;
+		return true;
+	}
+
+	friend ostream& operator <<(ostream& cout, Complex &c);
+	friend istream& operator >>(istream& cout, Complex &c);
+
+private:
+	double _real;
+	double _imag;
+};
+
+ostream& operator <<(ostream& cout, Complex &c)//重载输出<<
+{
+	cout << c._real << "+(" << c._imag << "i)";
+	return cout;
+}
+
+istream& operator >>(istream& cin, Complex &c)//重载输入>>
+{
+	cin >> c._real >> c._imag;
+	return cin;
+}
+
+
+void Funtest()
+{
+	Complex c1(1.0, 2.0), c2(3.0, 4.0);
+	Complex c3 = c2;
+	Complex c4;
+	cin >> c4;
+	c3 /= c1;
+	if (c1 <= c2)
+	{
+		cout << "c1 <= c2" << endl;
+	}
+	cout << c3 << endl;
+	cout << c1 + c2 << endl;
+}
+int main()
+{
+	Funtest();
+	system("pause");
+	return 0;
+}
