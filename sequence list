@@ -34,6 +34,9 @@ int BinarySearch(SeqList* pSeq, DATATYPE data);
 
 
 
+
+
+
 #include "seqlist.h"
 
 void InitSeqList(SeqList* pSeq)//初始化
