@@ -36,7 +36,6 @@ int BinarySearch(SeqList* pSeq, DATATYPE data);
 
 
 
-
 #include "seqlist.h"
 
 void InitSeqList(SeqList* pSeq)//初始化
@@ -396,7 +395,6 @@ static int BinarySearch1(SeqList* pSeq, DATATYPE data, int start, int end)
 	}
 	return -1;
 }
-
 
 
 
